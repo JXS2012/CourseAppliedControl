@@ -1,0 +1,12 @@
+\BOOKMARK [1][-]{section.1}{Fast setup}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Setup Virtual Machine}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{Connect to Crazyflie Using PC client}{section.1}% 3
+\BOOKMARK [1][-]{section.2}{Ubuntu setup}{}% 4
+\BOOKMARK [1][-]{section.3}{Flight}{}% 5
+\BOOKMARK [2][-]{subsection.3.1}{Before Flight}{section.3}% 6
+\BOOKMARK [2][-]{subsection.3.2}{Pre-Flight test}{section.3}% 7
+\BOOKMARK [2][-]{subsection.3.3}{Fly it}{section.3}% 8
+\BOOKMARK [1][-]{section.4}{Troubleshoot}{}% 9
+\BOOKMARK [2][-]{subsection.4.1}{regular problems}{section.4}% 10
+\BOOKMARK [1][-]{section.5}{API usage}{}% 11
+\BOOKMARK [1][-]{section.6}{Improve performance}{}% 12
