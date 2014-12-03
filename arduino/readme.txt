@@ -1,3 +1,6 @@
+encoder-lib:
+	install encoder lib to your sketchbook before using this package
+
 pc-side: 
 	Python code that read from arduino through serial port
 	Log/plot input-voltage/output-speed
