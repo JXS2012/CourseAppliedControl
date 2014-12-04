@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 import serial
 import time
 
-ser = serial.Serial('/dev/ttyUSB0',9600)
-
+ser = serial.Serial('/dev/ttyUSB0',115200)
+freq = 100
 input_signal = []
 output_signal = []
 input_time = []
@@ -14,16 +14,16 @@ output_time = []
 
 ser.flush()
 start = time.time()
-while input_signal.__len__()<200:
+while input_signal.__len__()<4000:
     x = ser.readline()
     flag = x.split()
     if flag != []:
-        if flag[0] == 'input':
+        if flag[0] == 'in':
             y = int(ser.readline().split()[0])/1024.*5
             input_signal.append(y)
             input_time.append(time.time()-start)
-        if flag[0] == 'output':
-            y = ser.readline().split()[0]
+        if flag[0] == 'out':
+            y = float(ser.readline().split()[0])/48.*2*3.14*freq
             output_signal.append(int(y))
             output_time.append(time.time()-start)
 print input_signal
@@ -45,13 +45,12 @@ f.close()
 
 fig1 = plt.figure(1)
 ax = fig1.add_subplot(1,1,1)
-ax.plot(output_time[:-1],output_vel)
+ax.plot(input_time,input_signal)
 
 fig2 = plt.figure(2)
 ax = fig2.add_subplot(1,1,1)
-ax.plot(input_time,input_signal)
+ax.plot(output_time[:-1],output_vel)
+
 plt.show()
-
-
 
 
