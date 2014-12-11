@@ -7,7 +7,14 @@ pc-side:
 		ToDo: Convert the unit of output-speed to rad/sec
 	System_id: an example that tries to id the motor
 
-arduino-side: 
+arduino-side:
+	Sin-folder: 
 	1:read input-voltage through analog A3
 	2:read encode counts through pin (2,3)
 	3:send readings to pc at 100 hz sampling rate
+
+	PWM-folder:
+	1:read input-voltage through analog A3,A2
+	2:read encode counts through pin (2,3)
+	3:send readings to pc at 500 hz sampling rate
+	4.send pwm signal to motor

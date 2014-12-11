@@ -1,2 +1,2 @@
-copy entire elapsedMillis/Encoder folder to your sketchbook/library
+copy all these library folders to your sketchbook/library
 restart arduino ide

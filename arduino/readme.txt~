@@ -1,5 +1,5 @@
-encoder-lib:
-	install encoder lib to your sketchbook before using this package
+extra-libs:
+	install these lib to sketchbook first
 
 pc-side: 
 	Python code that read from arduino through serial port
