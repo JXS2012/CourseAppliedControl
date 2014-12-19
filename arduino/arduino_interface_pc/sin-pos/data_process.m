@@ -10,29 +10,21 @@ f = fopen('output.txt','r');
 output = fscanf(f, 'time %f vel %f\n',[2 inf]);
 fclose(f);
 
-%%
-sigma = 25000;
-aveoutput = mean(output(2,:));
-%output(2,:) = output(2,:)-mean(output(2,:));
-for i=2:size(output,2)
-    if (abs(output(2,i)-aveoutput)>sigma)
-        output(2,i) = output(2,i-1);
-    end
-end
+% sigma = 25000;
 % output(2,:) = output(2,:)-mean(output(2,:));
-position = 0;
-pos_data = zeros(1,size(output,2));
-for i = 1:size(output,2)
-    position = position + output(i);
-    pos_data(i) = position;
-end
+% for i=2:size(output,2)
+%     if (abs(output(2,i))>sigma)
+%         output(2,i) = output(2,i-1);
+%     end
+% end
+% output(2,:) = output(2,:)-mean(output(2,:));
 
-Fs = 100;
+Fs = 500;
 T = 1/Fs;
 L = size(output,2);
 t = (0:L-1)*T;
 x = input(2,1:end-1);
-y = output(2,1:end);
+y = output(2,1:end)-output(2,1);
 %%
 NFFT = 2^nextpow2(L);
 X = fft(x,NFFT)/L;

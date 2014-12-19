@@ -10,35 +10,66 @@ f = fopen('output.txt','r');
 output = fscanf(f, 'time %f vel %f\n',[2 inf]);
 fclose(f);
 
-%%
-sigma = 25000;
-aveoutput = mean(output(2,:));
-%output(2,:) = output(2,:)-mean(output(2,:));
-for i=2:size(output,2)
-    if (abs(output(2,i)-aveoutput)>sigma)
-        output(2,i) = output(2,i-1);
-    end
-end
-% output(2,:) = output(2,:)-mean(output(2,:));
-position = 0;
-pos_data = zeros(1,size(output,2));
-for i = 1:size(output,2)
-    position = position + output(i);
-    pos_data(i) = position;
+Fs = 500;
+T = 1/Fs;
+tend = min(input(1,end),output(1,end));
+tstart = max(input(1,1),output(1,1));
+t = tstart:T:tend;
+u = interp1(input(1,:),input(2,1:end),t);
+y = interp1(output(1,:),output(2,1:end)-output(2,1),t);
+vel = diff(y)*Fs;
+vel = [vel,vel(end)];
+
+velf = vel;
+for i = 2:size(velf,2)
+   if abs(velf(i)-velf(i-1))>320
+       velf(i) = velf(i-1);
+   end
 end
 
-Fs = 100;
-T = 1/Fs;
-L = size(output,2);
-t = (0:L-1)*T;
-x = input(2,1:end-1);
-y = output(2,1:end);
+yf = y;
+for i = 2:size(yf,2)
+    if ((abs(yf(i)-yf(i-1))>2.4e5/Fs) || (abs(yf(i)-yf(i-1))<1e5/Fs))
+        yf(i:end) = yf(i:end)-(yf(i)-yf(i-1));
+    end
+end
+
+velff = diff(yf)*Fs;
+velff = [velff,velff(end)];
+
+for i = 2:size(velff,2)
+    if (velff(i) == 0)
+        velff(i) = velff(i-1);
+    end
+end
+
+vellp = vel;
+lpstep = 5;
+for i = lpstep+1:size(y,2)
+    vellp(i) = (yf(i)-yf(i-lpstep))/lpstep*Fs;
+end
+
+figure()
+plot(vellp,'-r');
+hold on
+plot(velff,'-y');
+%%
+L = size(x,2);
+NFFT = 2^nextpow2(L);
+X = fft(x,NFFT)/L;
+fdomain = Fs/2*linspace(0,1,NFFT/2+1);
+
+figure()
+subplot(2,1,1)
+semilogx(fdomain, 2*abs(X(1:NFFT/2+1)));
+title('Single-Sided Amplitude Spectrum of x(t)')
+xlabel('Frequency (Hz)')
+ylabel('|X(f)|')
 %%
 NFFT = 2^nextpow2(L);
 X = fft(x,NFFT)/L;
 Y = fft(y,NFFT)/L;
-fdomain = Fs/2*linspace(0,1,NFFT/2+1);
-
+fdomain = Fs/2*linspace(0,1,NFFT/2+1); 
 Fpass = 20;              % Passband Frequency
 Fstop = 21;              % Stopband Frequency
 Dpass = 0.057501127785;  % Passband Ripple
