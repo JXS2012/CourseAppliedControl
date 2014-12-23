@@ -3,3 +3,6 @@ sin-folder:
 
 pwm-folder:
 	Read motor input/output through serial. Use input_voltage and output_position to identify system. This is a third order system. PWM offers better fit from voltage to position. But it cannot work with speed.
+
+sin-pos-folder:
+	Read motor input/output through serial and get encoder position. Use input_voltage and output_position to identify system. This is a second order system.
