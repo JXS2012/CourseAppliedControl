@@ -1,0 +1,4 @@
+arduino_read.py
+	Python program that communicates with arduino through serial and store data as input.txt (time and voltage), output.txt (time and motor velocity).
+
+
